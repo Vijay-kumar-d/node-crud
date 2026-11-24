@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
+    const API_URL = import.meta.env.VITE_API_URL;
+
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     
@@ -18,9 +20,9 @@ function App() {
       const fetchUsers = async () => {
         try{
           setLoading(true);
-          setError(false);
+          setError("");
 
-          const response = await fetch("http://localhost:5001/api/users");
+          const response = await fetch(`${API_URL}/api/users`);
 
           if(!response.ok) {
             throw new Error("Failed to fetch users");
@@ -45,7 +47,7 @@ function App() {
           setError("");
 
           const response = await fetch(
-            "http://localhost:5001/api/users",
+            `${API_URL}/api/users`,
             {
               method: "POST",
               headers: {
@@ -91,7 +93,7 @@ function App() {
       // GET - get user by ID
       const getUserById = async (id) => {
         try{
-          const response = await fetch(`http://localhost:5001/api/users/${id}`);
+          const response = await fetch(`${API_URL}/api/users/${id}`);
           if(!response.ok) {
             throw new Error("Failed to fetch user by ID");
           }
@@ -108,7 +110,7 @@ function App() {
         try{
           setError("");
 
-          const response = await fetch(`http://localhost:5001/api/users/${id}`, {
+          const response = await fetch(`${API_URL}/api/users/${id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -145,10 +147,10 @@ function App() {
         const loadUsers = async () => {
           try {
             setLoading(true);
-            setError(false);
+            setError("");
 
             const response = await fetch(
-              "http://localhost:5001/api/users"
+              `${API_URL}/api/users`
             );
 
             if (!response.ok) {
@@ -165,7 +167,7 @@ function App() {
         };
 
         loadUsers();
-      }, []);  
+      }, [API_URL]);
       
       const handleEdit = (user) => {
         setSelectedUser(user);
@@ -187,7 +189,7 @@ function App() {
       // DELETE - delete user by ID
       const deleteUser = async (id) => {
         try{
-          const response = await fetch(`http://localhost:5001/api/users/${id}`,
+          const response = await fetch(`${API_URL}/api/users/${id}`,
           {
             method: "DELETE",
           });

@@ -1,13 +1,23 @@
+# Dependencies
+**/node_modules/
+
 # Environment variables
 .env
 .env.*
+!.env.example
 
-# Dependencies
-node_modules/
+# Build output
+**/dist/
+**/dist-ssr/
+**/build/
 
-# macOS files
+# macOS metadata
 .DS_Store
 ._*
 
 # Logs
 *.log
+
+# IDE
+.vscode/
+.idea/

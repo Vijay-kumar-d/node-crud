@@ -142,7 +142,29 @@ function App() {
 
       // Fetch users when component mounts
       useEffect(() => {
-        fetchUsers();
+        const loadUsers = async () => {
+          try {
+            setLoading(true);
+            setError(false);
+
+            const response = await fetch(
+              "http://localhost:5001/api/users"
+            );
+
+            if (!response.ok) {
+              throw new Error("Failed to fetch users");
+            }
+
+            const data = await response.json();
+            setUsers(data.users);
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setLoading(false);
+          }
+        };
+
+        loadUsers();
       }, []);  
       
       const handleEdit = (user) => {
